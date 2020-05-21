@@ -4,38 +4,33 @@ import java.util.concurrent.CountDownLatch;
 
 public class SynchronizedTest {
 
-    private int x = 0;
-    private static CountDownLatch countDownLatch;
-
-    public SynchronizedTest(CountDownLatch countDownLatch) {
-        this.countDownLatch = countDownLatch;
-    }
+    private int x = 1;
+    private volatile int v = 1;
+    private static int N = 10000;
+    private static CountDownLatch countDownLatch = new CountDownLatch(N);
 
     public static void main(String[] args) throws InterruptedException {
-        int n = 1000;
-        //不加锁修改共享变量
-        SynchronizedTest test1 = new SynchronizedTest(new CountDownLatch(n));
-        doTest(n , test1);
-        //加锁修改共享变量
-        countDownLatch.await();
-        SynchronizedTest test2 = new SynchronizedTest(new CountDownLatch(n));
-        doTest(n , test2);
+        SynchronizedTest test1 = new SynchronizedTest();
+        SynchronizedTest test2 = new SynchronizedTest();
+        doTest(N , test1 , test2);
     }
 
     public void add(){
-        x++;
-        countDownLatch.countDown();
+        System.out.println("未加锁======" + x++);
+    }
+
+    public void addV(){
+        System.out.println("volatile======" + v++);
     }
 
     public void synchAdd(){
         synchronized (this){
-            x++;
-            countDownLatch.countDown();
+            System.out.println("加锁======" + x++);
         }
     }
 
-    public static void doTest(int n , SynchronizedTest test) throws InterruptedException {
-        for (int i = 0; i <= n; i++){
+    public static void doTest(int n , SynchronizedTest test1 , SynchronizedTest test2) throws InterruptedException {
+        for (int i = 0; i < n; i++){
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -44,11 +39,12 @@ public class SynchronizedTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    test.add();
+//                    test1.add();
+//                    test1.addV();
+                    test2.synchAdd();
                 }
             });
             thread.start();
-            Thread.sleep(100);
             countDownLatch.countDown();
         }
     }
