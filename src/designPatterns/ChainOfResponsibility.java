@@ -11,5 +11,11 @@ public class ChainOfResponsibility {
 }
 
 interface Approve{
-    void doApprove(int level);
+
+    void doApprove(String message);
+
+    boolean isRun(String type);
+
 }
+
+
