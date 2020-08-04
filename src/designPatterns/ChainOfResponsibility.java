@@ -16,6 +16,17 @@ interface Approve{
 
     boolean isRun(String type);
 
+    void setNext(Approve approve);
+
+}
+
+abstract class AbstractApprove implements Approve{
+    protected Approve nextApprove;
+
+    @Override
+    public void setNext(Approve approve) {
+        nextApprove = approve;
+    }
 }
 
 
