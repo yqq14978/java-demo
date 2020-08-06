@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Date:2020/8/5
  * @Time:10:42
  */
-public class ThreadExchange {
+public class ThreadExchangeDemo {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         //synchronized
