@@ -10,6 +10,25 @@ package basic;
 public class DateTypeDemo {
 
     public static void main(String[] args) {
+//        dataCompare();
+        conversion();
+    }
+
+    public static void conversion() {
+        int a = 785411;
+        float b = a;
+        System.out.println(b);
+        int c = Short.MAX_VALUE;
+        System.out.println(c);
+        short d = (short) 4555;
+        System.out.println(d);
+        float e = 0.1234567F;
+        System.out.println(e);
+        double f = e;
+        System.out.println(f);
+    }
+
+    public static void dataCompare() {
         int a1 = 200;
         int a2 = new Integer(200);
         Integer a3 = 200;
