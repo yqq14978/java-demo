@@ -12,6 +12,7 @@ public class DateTypeDemo {
     public static void main(String[] args) {
 //        dataCompare();
         conversion();
+//        stringTest();
     }
 
     public static void conversion() {
@@ -24,8 +25,13 @@ public class DateTypeDemo {
         System.out.println(d);
         float e = 0.1234567F;
         System.out.println(e);
+        //小浮点转大浮点丢失进度
         double f = e;
         System.out.println(f);
+        e = 9.0F;
+        f = 1.0;
+        String str = "3.0";
+        System.out.println(e + f + str);
     }
 
     public static void dataCompare() {
@@ -42,6 +48,15 @@ public class DateTypeDemo {
         System.out.println("a4 == a5：" + (a4 == a5));
         System.out.println("a4 == a3：" + (a4 == a3));
         System.out.println("b1 == b2：" + (b1 == b2));
+    }
+
+    private static void stringTest(){
+        String a = new String("11");
+        String b = new String("1") + new String("1");
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(a == b);
+        System.out.println(a.equals(b));
     }
 
 }
