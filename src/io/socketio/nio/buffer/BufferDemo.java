@@ -18,10 +18,21 @@ public class BufferDemo {
         String str2 = "b";
         byteBuffer1.put(str1.getBytes());
         byteBuffer2.put(str1.getBytes());
-        System.out.println(byteBuffer1.equals(byteBuffer2));
+//        System.out.println(byteBuffer1.equals(byteBuffer2));
         byteBuffer2.clear();
         byteBuffer1.put(str2.getBytes());
-        System.out.println(byteBuffer1.compareTo(byteBuffer2));
+//        System.out.println(byteBuffer1.compareTo(byteBuffer2));
+
+        String str3 = "123456";
+        byteBuffer2.clear();
+        byteBuffer2.put(str3.getBytes());
+        System.out.println(byteBuffer2.position());
+        System.out.println(byteBuffer2.limit());
+        System.out.println(byteBuffer2.capacity());
+        byteBuffer2.flip();
+        System.out.println(byteBuffer2.position());
+        System.out.println(byteBuffer2.limit());
+        System.out.println(byteBuffer2.capacity());
     }
 
 }
