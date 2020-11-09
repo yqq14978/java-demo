@@ -1,6 +1,10 @@
 package io.socketio.nio.buffer;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 
 /**
  * Created with IDEA
@@ -11,7 +15,12 @@ import java.nio.ByteBuffer;
  */
 public class BufferDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+//        test1();
+        test2();
+    }
+
+    private static void test1(){
         ByteBuffer byteBuffer1 = ByteBuffer.allocate(1024);
         ByteBuffer byteBuffer2 = ByteBuffer.allocate(1024);
         String str1 = "a";
@@ -33,6 +42,34 @@ public class BufferDemo {
         System.out.println(byteBuffer2.position());
         System.out.println(byteBuffer2.limit());
         System.out.println(byteBuffer2.capacity());
+    }
+
+    private static void test2() throws IOException {
+        FileInputStream inputStream = new FileInputStream("input.txt");
+        FileOutputStream outputStream = new FileOutputStream("output.txt");
+
+        FileChannel inputChannel = inputStream.getChannel();
+        FileChannel outputChannel = outputStream.getChannel();
+
+        ByteBuffer buffer = ByteBuffer.allocate(512);
+        while (true){
+//            buffer.clear();
+
+            /*不注释掉clear方法，会将buffer的容量复原，也就是pos=0，limit=512，在进行IO读取时发现还有容量可用会继续读取，
+            * 但是因为channel没有重置会发现文件已经读取完毕，所以读取不到剩余内容，返回的是-1.
+            *
+            * 注释掉clear方法，buffer不会复原（不管是否调用clear方法buffer中的数据都不会清空），pos=limit=12，这个时候进
+            * 行IO读取的时候会判定为容量已耗尽（pos-limit=0），所以不会进行读取操作，直接返回0（IOUtil.readIntoNativeBuffer）
+            */
+            int read = inputChannel.read(buffer);
+            System.out.println("read = " + read);
+            if(read == -1){
+                break;
+            }
+
+            buffer.flip();
+            outputChannel.write(buffer);
+        }
     }
 
 }
