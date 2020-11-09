@@ -17,7 +17,8 @@ public class BufferDemo {
 
     public static void main(String[] args) throws IOException {
 //        test1();
-        test2();
+//        test2();
+        test3();
     }
 
     private static void test1(){
@@ -70,6 +71,23 @@ public class BufferDemo {
             buffer.flip();
             outputChannel.write(buffer);
         }
+    }
+
+    private static void test3(){
+        ByteBuffer buffer = ByteBuffer.allocate(512);
+
+        buffer.putChar('a');
+        buffer.putDouble(12121.121);
+        buffer.putInt(48848);
+        buffer.putLong(454654L);
+
+        buffer.flip();
+
+        System.out.println(buffer.getInt());
+        System.out.println(buffer.getChar());
+        System.out.println(buffer.getDouble());
+        System.out.println(buffer.getInt());
+        System.out.println(buffer.getLong());
     }
 
 }
