@@ -18,7 +18,8 @@ public class BufferDemo {
     public static void main(String[] args) throws IOException {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
     }
 
     private static void test1(){
@@ -83,11 +84,35 @@ public class BufferDemo {
 
         buffer.flip();
 
-        System.out.println(buffer.getInt());
+//        System.out.println(buffer.getInt());
         System.out.println(buffer.getChar());
         System.out.println(buffer.getDouble());
         System.out.println(buffer.getInt());
         System.out.println(buffer.getLong());
+    }
+
+    private static void test4(){
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+
+        for (byte i = 0; i < buffer.capacity(); i++){
+            buffer.put(i);
+        }
+
+        buffer.position(2);
+        buffer.limit(7);
+        ByteBuffer sliceBuffer = buffer.slice();
+
+        for (byte i = 0; i < sliceBuffer.capacity(); i++){
+//            i = (byte) (i * 2);
+            byte b = sliceBuffer.get(i);
+            b *= 2;
+            sliceBuffer.put(i , b);
+        }
+
+        buffer.clear();
+        while (buffer.hasRemaining()){
+            System.out.println(buffer.get());
+        }
     }
 
 }
