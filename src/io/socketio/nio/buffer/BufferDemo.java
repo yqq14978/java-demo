@@ -19,7 +19,8 @@ public class BufferDemo {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
     }
 
     private static void test1(){
@@ -113,6 +114,18 @@ public class BufferDemo {
         while (buffer.hasRemaining()){
             System.out.println(buffer.get());
         }
+    }
+
+    private static void test5(){
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+
+        for (byte i = 0; i < buffer.capacity(); i++){
+            buffer.put(i);
+        }
+
+        ByteBuffer readOnlyBuffer = buffer.asReadOnlyBuffer();
+        System.out.println(readOnlyBuffer.get(0));
+        readOnlyBuffer.put(0 , (byte)2);
     }
 
 }
