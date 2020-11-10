@@ -1,6 +1,7 @@
 package io.socketio.nio.buffer;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -20,7 +21,8 @@ public class BufferDemo {
 //        test2();
 //        test3();
 //        test4();
-        test5();
+//        test5();
+        test6();
     }
 
     private static void test1(){
@@ -126,6 +128,33 @@ public class BufferDemo {
         ByteBuffer readOnlyBuffer = buffer.asReadOnlyBuffer();
         System.out.println(readOnlyBuffer.get(0));
         readOnlyBuffer.put(0 , (byte)2);
+    }
+
+    private static void test6() throws IOException {
+        ByteBuffer heapByteBuffer = ByteBuffer.allocate(1024);
+        ByteBuffer directByteBuffer = ByteBuffer.allocateDirect(1024);
+
+        FileInputStream inputStream = new FileInputStream("input.txt");
+        FileOutputStream outputStream = new FileOutputStream("output.txt");
+
+        FileChannel inputChannel = inputStream.getChannel();
+        FileChannel outputChannel = outputStream.getChannel();
+
+        long start = System.currentTimeMillis();
+        System.out.println("start-" + start);
+        inputChannel.read(heapByteBuffer);
+        heapByteBuffer.flip();
+        outputChannel.write(heapByteBuffer);
+        System.out.println("heapByteBuffer完成时间：" + (System.currentTimeMillis() - start));
+
+        long startD = System.currentTimeMillis();
+        System.out.println("startD-" + startD);
+        inputChannel.read(directByteBuffer);
+        directByteBuffer.flip();
+        outputChannel.write(directByteBuffer);
+        System.out.println("directByteBuffer完成时间：" + (System.currentTimeMillis() - startD));
+
+        System.exit(0);
     }
 
 }
