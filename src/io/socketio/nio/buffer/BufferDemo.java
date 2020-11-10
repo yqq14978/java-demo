@@ -4,8 +4,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 /**
  * Created with IDEA
@@ -22,7 +28,8 @@ public class BufferDemo {
 //        test3();
 //        test4();
 //        test5();
-        test6();
+//        test6();
+        test7();
     }
 
     private static void test1(){
@@ -155,6 +162,32 @@ public class BufferDemo {
         System.out.println("directByteBuffer完成时间：" + (System.currentTimeMillis() - startD));
 
         System.exit(0);
+    }
+
+    private static void test7() throws IOException {
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        SocketAddress socketAddress = new InetSocketAddress(8899);
+        serverSocketChannel.bind(socketAddress);
+
+        ByteBuffer[] buffers = new ByteBuffer[3];
+        buffers[0] = ByteBuffer.allocate(2);
+        buffers[1] = ByteBuffer.allocate(3);
+        buffers[2] = ByteBuffer.allocate(4);
+        int messageLength = 2 + 3 + 4;
+
+        SocketChannel socketChannel = serverSocketChannel.accept();
+        System.out.println("客户端接入。。。");
+
+        int read = 0;
+        while (read < messageLength){
+            read += socketChannel.read(buffers);
+            System.out.println("read-" + read);
+            Arrays.stream(buffers).map(byteBuffer -> "position：" + byteBuffer.position()).forEach(System.out::println);
+        }
+        Arrays.stream(buffers).forEach(byteBuffer -> {
+            byteBuffer.flip();
+        });
+        socketChannel.write(buffers);
     }
 
 }
