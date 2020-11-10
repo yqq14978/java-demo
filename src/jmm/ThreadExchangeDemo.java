@@ -11,7 +11,9 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created with IDEA
  *
- * @author:yeqq
+ * 线程间的数据交换
+ *
+ *  @author:yeqq
  * @Date:2020/8/5
  * @Time:10:42
  */
