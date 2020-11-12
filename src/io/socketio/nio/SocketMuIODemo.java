@@ -55,6 +55,7 @@ public class SocketMuIODemo {
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         client.register(selector , SelectionKey.OP_READ , buffer);
+        System.out.println("新连接加入");
     }
 
     private static void readHandler(SelectionKey key) throws IOException {
@@ -71,7 +72,8 @@ public class SocketMuIODemo {
                     byte[] info = new byte[buffer.limit()];
                     buffer.get(info);
                     System.out.println("新消息：" + new String(info));
-                    buffer.clear();        break;
+                    buffer.clear();
+                    break;
                 }
             }else if(read == 0){
                 break;
