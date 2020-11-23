@@ -50,8 +50,10 @@ public class SocketMuIOServerDemo {
                         while (iterator.hasNext()){
                             SocketChannel val = clientMap.get(iterator.next());
                             ByteBuffer buffer = ByteBuffer.allocate(info.getBytes().length);
+                            buffer.clear();
                             buffer.put(info.getBytes());
-                            val.write(buffer);
+                            buffer.flip();
+                            System.out.println(val.write(buffer));
                         }
 
                         String address = client.getRemoteAddress().toString();
@@ -76,7 +78,8 @@ public class SocketMuIOServerDemo {
                                 SocketChannel val = clientMap.get(key);
                                 buffer.clear();
                                 buffer.put(info.getBytes());
-                                int c = val.write(buffer);
+                                buffer.flip();
+                                System.out.println(val.write(buffer));
                             }
                         }
 
