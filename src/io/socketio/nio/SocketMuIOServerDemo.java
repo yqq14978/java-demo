@@ -63,7 +63,12 @@ public class SocketMuIOServerDemo {
                         SocketChannel client = (SocketChannel) selectionKey.channel();
                         ByteBuffer buffer = ByteBuffer.allocate(1024);
                         client.configureBlocking(false);
-                        client.read(buffer);
+                        try{
+                            client.read(buffer);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            continue;
+                        }
 
                         String address = client.getRemoteAddress().toString();
                         buffer.flip();
