@@ -19,15 +19,16 @@ public class SocketNIOClientDemo {
         socketChannel.configureBlocking(false);
         socketChannel.connect(new InetSocketAddress("localhost" , 9090));
 
-        while (true){
-            if(socketChannel.isConnectionPending()){
-                socketChannel.finishConnect();
+        if(socketChannel.isConnectionPending()){
+            socketChannel.finishConnect();
+            while (true){
                 ByteBuffer buffer = ByteBuffer.allocate(1024);
-                socketChannel.read(buffer);
-                buffer.flip();
-                byte[] bytes = new byte[buffer.limit()];
-                buffer.get(bytes);
-                System.out.println(new String(bytes));
+                if(socketChannel.read(buffer) > 0){
+                    buffer.flip();
+                    byte[] bytes = new byte[buffer.limit()];
+                    buffer.get(bytes);
+                    System.out.println(new String(bytes));
+                }
             }
         }
     }
