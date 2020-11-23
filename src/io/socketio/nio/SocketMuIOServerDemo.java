@@ -73,15 +73,14 @@ public class SocketMuIOServerDemo {
                         while (iterator.hasNext()){
                             String key = iterator.next();
                             if(!key.equals(address) && clientMap.get(key) != null){
-
                                 SocketChannel val = clientMap.get(key);
                                 buffer.clear();
                                 buffer.put(info.getBytes());
-                                val.write(buffer);
+                                int c = val.write(buffer);
                             }
                         }
 
-                        System.out.println(info);
+                        System.out.print(info);
                     }
 
                     selectionKeyIterator.remove();
