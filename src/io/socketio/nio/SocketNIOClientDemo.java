@@ -17,7 +17,7 @@ public class SocketNIOClientDemo {
     public static void main(String[] args) throws IOException {
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
-        socketChannel.connect(new InetSocketAddress("localhost" , 9090));
+        socketChannel.connect(new InetSocketAddress("127.0.0.1" , 9090));
 
         if(socketChannel.isConnectionPending()){
             socketChannel.finishConnect();
