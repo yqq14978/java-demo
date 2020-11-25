@@ -1,11 +1,8 @@
-package io.socketio.nio;
+package io.socketio;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 
@@ -14,9 +11,9 @@ import java.nio.channels.SocketChannel;
  *
  * @author:yeqq
  * @Date:2020/11/25
- * @Time:11:39
+ * @Time:15:26
  */
-public class IoClient {
+public class ZeroCopyClient {
 
     public static void main(String[] args) throws IOException {
         SocketChannel socketChannel = SocketChannel.open();
@@ -25,21 +22,10 @@ public class IoClient {
 
         String fileName = "D:\\othersTools\\安装包\\redis-4.0.14.tar.gz";
         FileChannel fileChannel = new FileInputStream(fileName).getChannel();
-//        FileChannel fileChannel = new FileInputStream("input.txt").getChannel();
 
-        ByteBuffer buffer = ByteBuffer.allocate(4096);
-        int readCount;
-        int total = 0;
         long startTime = System.currentTimeMillis();
-        while ((readCount = fileChannel.read(buffer)) != -1){
-            total += readCount;
-            buffer.flip();
-            socketChannel.write(buffer);
-            buffer.rewind();
-        }
-
+        long total = fileChannel.transferTo(0 , fileChannel.size() , socketChannel);
         System.out.println("数据大小：" + total + "，耗时：" + (System.currentTimeMillis() - startTime));
         System.exit(0);
     }
-
 }
