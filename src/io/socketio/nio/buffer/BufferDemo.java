@@ -29,7 +29,8 @@ public class BufferDemo {
 //        test4();
 //        test5();
 //        test6();
-        test7();
+//        test7();
+        directBufferTest();
     }
 
     private static void test1(){
@@ -188,6 +189,11 @@ public class BufferDemo {
             byteBuffer.flip();
         });
         socketChannel.write(buffers);
+    }
+
+    public static void directBufferTest() throws IOException {
+        ByteBuffer directByteBuffer = ByteBuffer.allocateDirect(1024*1024*1024);
+        System.in.read();
     }
 
 }
