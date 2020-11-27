@@ -1,4 +1,4 @@
-package io.socketio;
+package io.socketio.nio;
 
 import java.io.FileInputStream;
 import java.io.IOException;
