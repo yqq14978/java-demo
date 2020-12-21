@@ -1,0 +1,11 @@
+package jdk8;
+
+/**
+ * Created with IDEA
+ *
+ * @author:yeqq
+ * @Date:2020/12/18
+ * @Time:10:22
+ */
+public class Father implements Basic {
+}
