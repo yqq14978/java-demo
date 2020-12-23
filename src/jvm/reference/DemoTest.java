@@ -8,6 +8,7 @@ import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.WeakHashMap;
 
 /**
  * Created with IDEA
@@ -18,6 +19,8 @@ import java.util.Arrays;
  */
 public class DemoTest {
 
+    private static final Basic B = new Basic();
+
     public static void main(String[] args) throws InterruptedException {
         Basic basic = new Basic();
         //用四倍空间
@@ -26,16 +29,31 @@ public class DemoTest {
 //        long[] sum3 = new long[1024*1024*100];
 //        ByteBuffer.allocate(1024*1024*100);
         //软引用
-//        SoftReference<Basic> softReference = new SoftReference(basic);
-//        System.out.println(softReference.get());
+        SoftReference<Basic> softReference = new SoftReference(basic);
+        for (;;){
+            if(softReference.get() == null){
+                System.out.println("虚引用对象被回收");
+                break;
+            }
+            ByteBuffer.allocate(50*1024*1024);
+            Thread.sleep(20);
+        }
         //弱引用
-        WeakReference<Basic> weakReference = new WeakReference<>(basic);
+//        WeakReference<Basic> weakReference = new WeakReference<>(new Basic());
 //        basic = null;
-        System.gc();
-        Thread.sleep(1000);
-//        weakReference.get();
+//        System.gc();
+//        Thread.sleep(1000);
+//        for (;;){
+//            if(weakReference.get() == null){
+//                System.out.println("虚引用对象被回收");
+//                System.out.println(weakReference.enqueue());
+//                break;
+//            }
+//            new Object();
+//            System.out.println(weakReference.enqueue());
+//        }
         //虚引用
-//        PhantomReference<Basic> phantomReference = new PhantomReference(basic , new ReferenceQueue());
+//        PhantomReference<Basic> phantomReference = new PhantomReference(B , new ReferenceQueue());
 //        System.out.println(phantomReference.get());
         System.exit(0);
     }
