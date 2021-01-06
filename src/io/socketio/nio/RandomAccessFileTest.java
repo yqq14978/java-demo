@@ -13,10 +13,17 @@ import java.io.RandomAccessFile;
 public class RandomAccessFileTest {
 
     public static void main(String[] args) throws IOException {
-        RandomAccessFile randomAccessFile =
+        RandomAccessFile readRandom =
                 new RandomAccessFile("D:\\others\\configserver\\config\\application.properties" , "rw");
+        RandomAccessFile writeRandom =
+                new RandomAccessFile("D:\\others\\configserver\\config\\application0.properties" , "rw");
 
-        System.out.println("文件大小：" + randomAccessFile.length());
-        System.out.println(randomAccessFile.read());
+        System.out.println("文件大小：" + readRandom.length());
+//        System.out.println(readRandom.read());
+        byte[] data = new byte[1024];
+        System.out.println(readRandom.read(data));
+        writeRandom.write(data);
+//        randomAccessFile.seek();
+//        randomAccessFile.getFilePointer();
     }
 }
