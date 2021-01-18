@@ -15,7 +15,7 @@ public class Array {
 
     /**
     * @Author yeqq
-    * @Description 计算数组中不重复的数有多少个
+    * @Description 计算数组中不重复的数有多少个（快慢指针）
     * @Date 11:43 2021/1/18
     * @Param [nums]
     * @return int
