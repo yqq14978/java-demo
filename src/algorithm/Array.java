@@ -12,7 +12,9 @@ public class Array {
     public static void main(String[] args) {
 //        removeDuplicates();
 //        pivotIndex();
-        searchInsert();
+//        searchInsert();
+        merge();
+        System.exit(0);
     }
 
     /**
@@ -120,5 +122,49 @@ public class Array {
 //            targetIndex = midIndex;
 //        }
 //        System.out.println(targetIndex);
+    }
+
+    /**
+    * @Author yeqq
+    * @Description 合并重叠的区间
+    * @Date 16:53 2021/1/19
+    * @Param []
+    * @return void
+    **/
+    public static void merge(){
+        int[][] intervals = {{2,3},{2,2},{3,3},{1,3},{5,7},{2,2},{4,6}};
+        //先对已有区间进行排序
+        for (int i=0; i<intervals.length; i++){
+            boolean didswap = false;
+            for(int j=0; j<intervals.length - i - 1; j++){
+                int[] temp = {};
+                if(intervals[j][0] > intervals[j+1][0]){
+                    temp = intervals[j];
+                    intervals[j] = intervals[j+1];
+                    intervals[j+1] = temp;
+                    didswap = true;
+                }
+            }
+            if(!didswap){
+                break;
+            }
+        }
+        int mergeTimes = 0;
+        for(int i = 1; i < intervals.length; i++){
+            if(intervals[i - 1][1] >= intervals[i][0]){
+                if(intervals[i - 1][1] < intervals[i][1]){
+                    intervals[i - 1][1] = intervals[i][1];
+                }
+                intervals[i] = intervals[i - 1];
+                mergeTimes++;
+            }
+        }
+        int[][] newIntervals = new int[intervals.length - mergeTimes][2];
+        int i = 0;
+        for (; mergeTimes < intervals.length; mergeTimes++){
+            newIntervals[i] = intervals[mergeTimes];
+            System.out.println("[" + newIntervals[i][0] + "," + newIntervals[i][1] + "]");
+            i++;
+        }
     }
 }
