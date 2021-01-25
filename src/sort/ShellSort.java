@@ -3,7 +3,7 @@ package sort;
 /**
  * Created with IDEA
  *
- * 根据增量gap将原来的数组分成若干个小数组，然后再对这些数组进行插入排序，知道增量gap变为1
+ * 根据增量gap将原来的数组分成若干个小数组，然后再对这些数组进行插入排序，直到增量gap变为1
  *
  * @author:yeqq
  * @Date:2020/11/4
