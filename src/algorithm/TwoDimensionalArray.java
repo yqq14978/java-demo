@@ -3,9 +3,67 @@ package algorithm;
 public class TwoDimensionalArray {
 
     public static void main(String[] args) {
+        int[][] matrix = {
+                {2,3,4},
+                {0,1,0},
+                {9,3,0},
+                {7,8,9}};
 //        flipMatrix();
 //        zeroMatrix();
-        zeroMatrix1();
+//        zeroMatrix1();
+        findDiagonalOrder(matrix);
+    }
+
+    /**
+     * 对角线遍历
+     * @param matrix
+     */
+    private static void findDiagonalOrder(int[][] matrix){
+        int m = matrix.length - 1;
+        int n = matrix[0].length - 1;
+        int m0 = 0;
+        int n0 = 0;
+        int a = 0;
+        boolean swap = false;
+        int[] container = new int[matrix.length * (matrix[0].length)];
+        int i=0;
+        while (i <= m+n){
+            if(m0 < 0){
+                m0 = 0;
+            }
+            if(m0 > m){
+                m0 = m;
+                i++;
+                n0 = i-m0;
+                swap = !swap;
+                continue;
+            }
+            if(n0 < 0){
+                n0 = 0;
+            }
+            if(n0 > n){
+                n0 = n;
+                i++;
+                m0 = i-n0;
+                swap = !swap;
+                continue;
+            }
+            if(m0+n0 > i){
+                i++;
+                swap = !swap;
+            }else {
+                container[a] = matrix[m0][n0];
+                System.out.println(container[a]);
+                a++;
+                if(swap){
+                    m0++;
+                    n0--;
+                }else {
+                    n0++;
+                    m0--;
+                }
+            }
+        }
     }
 
     /**
